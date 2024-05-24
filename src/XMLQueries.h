@@ -14,8 +14,8 @@ auto ConstructLexicalMonthYearFromYYYYMM(const std::string& content) -> std::str
 using href_t = std::string;
 using text_t = std::string;
 /** Struct representing the useful information to be extracted from an <a> node.
- * @param href the value of the href attribute
- * @param value the value of the text
+ * @param href the value of the href attribute i.e. /archive/us/202401
+ * @param value the value of the text i.e. 202401
 */
 struct AArchiveContent_t {
     href_t href;

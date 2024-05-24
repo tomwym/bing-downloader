@@ -3,7 +3,9 @@
 #include "XMLContainer.h"
 
 #include <filesystem>
+#include <format>
 #include <map>
+#include <iostream>
 
 #include "CurlWriteChunks.h"
 
@@ -17,11 +19,11 @@ class ResourceGetterPrivateTestsAdapter;
 class ResourceGetter {
     friend ResourceGetterPrivateTestsAdapter;
 
-    bool _get_from_online;
+    bool _dry_run;
     std::filesystem::path _local_root;
 public:
-    ResourceGetter(bool get_from_online, const std::filesystem::path& local_root)
-    : _get_from_online{get_from_online}
+    ResourceGetter(bool dry_run, const std::filesystem::path& local_root)
+    : _dry_run{dry_run}
     , _local_root{local_root}
     {}
     /**
@@ -33,7 +35,7 @@ public:
         if (local && local->Valid()) {
             return std::move(local);
         }
-        if (_get_from_online) {
+        if (!_dry_run) {
             return GetOnlineResource(URI, type);
         }
         return nullptr;
@@ -62,11 +64,13 @@ private:
     auto GetOnlineResource(const std::string& URL, const RESOURCE_TYPE type) -> XMLContainerPtr {
         const std::filesystem::path local_relative_path{URLToLocalResource(URL, type)};
         CurlWriteChunks curl{URL, local_relative_path};
+        std::cout << std::format("Retrieving online resource: {}\n", URL);
         return std::make_unique<XMLContainer>(local_relative_path);
     }
 
     auto GetLocalResource(const std::string& URL, const RESOURCE_TYPE type) -> XMLContainerPtr {
         const std::filesystem::path local_relative_path{URLToLocalResource(URL, type)};
+        std::cout << std::format("Retrieving local resource: {}\n", local_relative_path.string());
         return std::make_unique<XMLContainer>(local_relative_path);
     }
 };

@@ -19,18 +19,8 @@ find_package(LibXml2 REQUIRED)
 include_directories(${LIBXML2_INCLUDE_DIR})
 
 add_subdirectory(src)
-
-add_executable(json-test src/alt/json.cpp)
-target_link_libraries(json-test ${nlohmann_json_LIBRARIES})
-
-find_package(Boost 1.82 COMPONENTS program_options REQUIRED)
-add_executable(po src/alt/options.cpp)
-target_link_libraries(po Boost::program_options)
-
-add_executable(curltest src/alt/curltest.cpp)
-target_link_libraries(curltest lib)
-
 add_subdirectory(tests)
+add_subdirectory(test-server)
 
 # cmake --build . -j
 # boost woes

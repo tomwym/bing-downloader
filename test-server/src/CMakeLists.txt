@@ -1,0 +1,10 @@
+add_library(sandbox
+    HTTPHeaderParse.cpp
+    NaiveSocketComponents.cpp
+    SelfClosingSocket.cpp
+    NaiveHeader.cpp
+    SimpleFoxServer.cpp
+    ThreadPool.cpp
+    pure-functions/Parsing.cpp
+    pure-functions/FileIO.cpp
+)

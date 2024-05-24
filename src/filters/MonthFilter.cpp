@@ -19,12 +19,12 @@ MonthFilter::MonthFilter(const FilterOps op, const std::string& condition)
 
 auto MonthFilter::Filter(const filter_target_t& target) const -> bool {
     // If invalid grammar then ignore this filter (return true)
-    if (!_valid_grammar) {
+    if (!_valid_grammar || target.length() < 6) {
         return true;
     }
     else {
         const int condition{std::stoi(_condition)};
         const int month{std::stoi(target.substr(4, 2))};
-        return Compare(_operator, condition, month);
+        return Compare(_operator, month, condition);
     }
 }

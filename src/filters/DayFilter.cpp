@@ -19,12 +19,12 @@ DayFilter::DayFilter(const FilterOps op, const std::string& condition)
 
 auto DayFilter::Filter(const filter_target_t& target) const -> bool {
     // If invalid grammar then ignore this filter (return true)
-    if (!_valid_grammar) {
+    if (!_valid_grammar || target.length() < 8) {
         return true;
     }
     else {
         const int condition{std::stoi(_condition)};
         const int day{std::stoi(target.substr(6, 2))};
-        return Compare(_operator, condition, day);
+        return Compare(_operator, day, condition);
     }
 }

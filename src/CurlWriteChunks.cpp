@@ -26,6 +26,7 @@ public:
     , _successful{false}
     {
         std::cout << std::format("Requesting from url: {}\n", url);
+        std::cout << std::format("Writing to: {}\n\n", path.string());
         VerifyPath(path);
         std::ofstream file{path, std::ios::binary | std::ios::trunc};
 
